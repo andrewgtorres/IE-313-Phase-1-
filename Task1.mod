@@ -45,7 +45,7 @@ subject to maximum{(i,m) in GENERATORS}:
 pg[i,m] <= pg_max[i,m];
 
 subject to low_line_limit{(i,j,k) in BRANCHES}:
-(1/ reactance [i,j,k]) * (delta[i] - delta[j]) >= lower_line_limit[i,j,k];
+(1/reactance[i,j,k]) * (delta[i] - delta[j]) >= lower_line_limit[i,j,k];
 
 subject to  up_line_limit{(i,j,k) in BRANCHES}:
-(1 / reactance [i,j,k]) * (delta[i] - delta[j]) <= upper_line_limit[i,j,k];
+(1/reactance[i,j,k]) * (delta[i] - delta[j]) <= upper_line_limit[i,j,k];
