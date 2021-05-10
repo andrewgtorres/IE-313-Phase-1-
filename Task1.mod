@@ -25,13 +25,15 @@ param alpha{GENERATORS};
 var power_generated{GENERATORS}  >= 0;
 var power_dispatched{GENERATORS}  >= 0;
 var delta{BUSES} >= 0;
+# total power generated across all generators (for report)
+var total_pg = sum{(i,j) in GENERATORS} power_generated[i,j];
 
 # objective function
 minimize total_cost: 
   sum{(i,j) in GENERATORS} power_generated[i,j] * pg_cost[i,j];
 
 # constraints
-subject to balance{i in BUSES}:
+subject to power{i in BUSES}:
 # power generated + power injected = power injected + demand + power dispatched
 sum{(i,m) in GENERATORS} power_generated[i,m] + sum{(j,i,k) in BRANCHES}((1/reactance[j,i,k]) * (delta[j] - delta[i])) 
 = sum{(i,j,k) in BRANCHES}((1/reactance [i,j,k]) * (delta[i] - delta[j])) + demand[i] + sum{(i,m) in GENERATORS} power_dispatched[i,m];
