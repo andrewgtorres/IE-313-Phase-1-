@@ -4,7 +4,7 @@
 # Andrew Torres, Francine Kibwana, Denise Sullivan, Ted Hall
 
 # number buses in case
-param num_buses := 118;
+param num_buses;
 
 # define sets
 set BUSES = 1..num_buses;
@@ -36,13 +36,13 @@ subject to balance{i in BUSES}:
 sum{(i,m) in GENERATORS} power_generated[i,m] + sum{(j,i,k) in BRANCHES}((1/reactance[j,i,k]) * (delta[j] - delta[i])) 
 = sum{(i,j,k) in BRANCHES}((1/reactance [i,j,k]) * (delta[i] - delta[j])) + demand[i] + sum{(i,m) in GENERATORS} power_dispatched[i,m];
 
-subject to minimum{(i,m) in GENERATORS}:
+subject to minimum_power{(i,m) in GENERATORS}:
 # power generated must be greater than or equal to minimum power generated
-pg[i,m] >= pg_min[i,m];
+power_generated[i,m] >= pg_min[i,m];
 
-subject to maximum{(i,m) in GENERATORS}:
+subject to maximum_power{(i,m) in GENERATORS}:
 # power generated must be less than maximum power generates
-pg[i,m] <= pg_max[i,m];
+power_generated[i,m] <= pg_max[i,m];
 
 subject to low_line_limit{(i,j,k) in BRANCHES}:
 # power injected at each bus must be greater than or equal to lower line limit
