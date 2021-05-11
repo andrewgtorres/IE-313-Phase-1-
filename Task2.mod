@@ -44,8 +44,9 @@ subject to cont_gen{(i,m) in CONT_GEN: (i,m) not in GENERATORS}:
 # contingency generator produces zero power
 power_generated[i,m] + power_gen_cont[i,m] = 0;
 
-subject to equation1{(i,m) in GENERATORS: (i,m) not in CONT_GEN}:
-power_gen_cont[i,m] = power_generated[i,m] + alpha[i,m]*omega;
+subject to equation1:
+sum{(i,m) in GENERATORS: (i,m) not in CONT_GEN}power_gen_cont[i,m] = 
+sum{(i,m) in GENERATORS: (i,m) not in CONT_GEN}(power_generated[i,m] + alpha[i,m]*omega);
 
 subject to power{i in BUSES}:
 # power generated + power injected = power injected + demand + power dispatched
